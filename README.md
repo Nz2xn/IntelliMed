@@ -36,7 +36,7 @@ IntelliMed is a specialized search engine tailored for pathologists. It filters 
 
    git clone \[https://github.com/Nz2xn/IntelliMed.git](https://github.com/Nz2xn/IntelliMed.git)
 
-   cd IntelliMed
+   cd IntelliMed```
 
 
 
@@ -76,6 +76,7 @@ Visualization: Chart.js
 Feedback is welcome! If you are a pathologist or developer, feel free to open an issue or suggest a feature.
 
 Developed for the pathology community.
+
 
 
 
