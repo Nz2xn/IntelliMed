@@ -50,7 +50,6 @@ pip install -r requirements.txt
 
 python app.py
 
-```
 
 
 
@@ -77,6 +76,7 @@ Visualization: Chart.js
 Feedback is welcome! If you are a pathologist or developer, feel free to open an issue or suggest a feature.
 
 Developed for the pathology community.
+
 
 
 
