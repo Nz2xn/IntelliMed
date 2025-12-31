@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntelliMed: Pathology Evidence Engine</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="tool-sidebar">
+            
+            <div class="tool-btn" onclick="toggleReviewFilter()" title="Show Reviews Only">
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+            <div class="tool-btn" onclick="toggleFreePdfFilter()" title="Free PDFs Only">
+                <i class="fa-solid fa-unlock"></i>
+            </div>
+
+            <div class="tool-btn" onclick="toggleSortOrder()" title="Sort by Impact (Citations)">
+                <i class="fa-solid fa-arrow-down-9-1"></i>
+            </div>
+            
+            <div class="tool-btn" onclick="copyReadingList()" title="Copy List to Clipboard">
+                <i class="fa-regular fa-copy"></i>
+            </div>
+
+            <div class="tool-btn" onclick="toggleFocusMode()" title="Focus Mode (Hide Charts)">
+                <i class="fa-solid fa-eye"></i>
+            </div>
+
+            <div class="tool-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });" title="Back to Top">
+                <i class="fa-solid fa-arrow-up"></i>
+            </div>
+        </div>
+
+        <header class="header">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                
+                <div style="text-align: left;">
+                    <h1 style="margin: 0; font-size: 1.8rem;">
+                        <i class="fa-solid fa-microscope" style="color:#2563eb;"></i> IntelliMed
+                    </h1>
+                    <p style="margin: 5px 0 0 0; color:#64748b; font-weight: 500;">
+                        Curated Evidence for Pathologists
+                    </p>
+                    <p style="margin: 2px 0 0 0; font-size: 0.85rem; color: #94a3b8;">
+                        Designed by <strong>Nazanin Ayareh, MD</strong>
+                    </p>
+                </div>
+
+                <a href="https://t.me/intelliMed" target="_blank" style="text-decoration: none;">
+                    <button style="
+                        display: flex; 
+                        align-items: center; 
+                        gap: 10px; 
+                        background-color: white; 
+                        border: 1px solid #e2e8f0; 
+                        padding: 10px 20px; 
+                        border-radius: 30px; 
+                        cursor: pointer; 
+                        color: #229ED9; 
+                        font-weight: 600; 
+                        font-family: 'Inter', sans-serif;
+                        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+                        transition: all 0.2s ease;">
+                        
+                        <span>Join Channel</span>
+                        <i class="fa-brands fa-telegram fa-xl"></i>
+                    </button>
+                </a>
+
+            </div>
+        </header>
+
+        <div class="controls" style="flex-direction: column; align-items: stretch; gap: 15px;">
+            
+            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items: center;">
+                
+                <select id="category-select" onchange="updateSubTopics()" style="flex:1; min-width:200px;">
+                    <option value="surgical">Surgical Pathology</option>
+                    <option value="cytopathology">Cytopathology</option>
+                    <option value="hematopathology">Hematopathology</option>
+                    <option value="molecular">Molecular / Genetics</option>
+                    <option value="computational">AI & Digital Path</option>
+                </select>
+
+                <select id="subtopic-select" style="flex:1; min-width:200px;">
+                    </select>
+
+                <div style="display:flex; gap:8px; margin-left: auto;">
+                    <button id="btn-trend" class="icon-btn" onclick="toggleChart('trend-card', 'btn-trend')" title="Toggle Growth Trend">
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+                    </button>
+                    
+                    <button id="btn-expert" class="icon-btn" onclick="toggleChart('expert-card', 'btn-expert')" title="Toggle Leading Experts">
+                        <i class="fa-solid fa-user-doctor"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div style="display:flex; gap:10px; justify-content: center;">
+                <button onclick="startSearch()" style="width: 100%; justify-content: center;">
+                    <i class="fa-solid fa-search"></i> Find Papers
+                </button>
+                <button onclick="viewSaved()" style="background-color:#0f172a; width: 100%; justify-content: center;">
+                    <i class="fa-solid fa-bookmark"></i> My Library
+                </button>
+            </div>
+        </div>
+
+        <div id="chart-section" style="display:block; margin: 20px auto; width: 100%; max-width: 800px; box-sizing: border-box;">
+            
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                
+                <div id="trend-card" style="display:none; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                        <h4 style="margin:0; color:#334155; font-size: 1rem; font-weight: 600;">
+                            <i class="fa-solid fa-arrow-trend-up" style="color:#2563eb; margin-right:10px;"></i>Growth Trend
+                        </h4>
+                        <span id="trend-badge" style="font-size:0.8rem;"></span>
+                    </div>
+                    <div style="position: relative; height: 220px; width: 100%;">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+
+                <div id="expert-card" style="display:none; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                        <h4 style="margin:0; color:#334155; font-size: 1rem; font-weight: 600;">
+                            <i class="fa-solid fa-user-doctor" style="color:#7c3aed; margin-right:10px;"></i>Leading Experts
+                        </h4>
+                        <span style="font-size:0.8rem; color:#64748b;">Most Active Authors</span>
+                    </div>
+                    <div style="position: relative; height: 220px; width: 100%;">
+                        <canvas id="journalChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="results-area"></div>
+
+        <div id="pagination-controls" class="pagination" style="display:none;">
+            <button id="prev-btn" onclick="changePage(-1)">Previous</button>
+            <span id="page-info">Page 1</span>
+            <button id="next-btn" onclick="changePage(1)">Next</button>
+        </div>
+
+        <div id="debug-console" style="display:none;"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}" type="module"></script>
+
+</body>
+</html>

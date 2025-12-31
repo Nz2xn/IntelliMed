@@ -1,0 +1,434 @@
+/* static/css/style.css */
+
+/* --- GLOBAL RESETS --- */
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background-color: #f4f7f6; 
+    margin: 0; 
+    padding: 0; 
+    color: #333; 
+}
+
+/* --- HEADER --- */
+header { 
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); 
+    color: white; 
+    padding: 1rem 2rem; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+}
+
+.header-content { 
+    max-width: 1000px; 
+    margin: 0 auto; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.brand { display: flex; flex-direction: column; }
+header h1 { margin: 0; font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; }
+.subtitle { font-size: 0.9rem; font-weight: 300; opacity: 0.8; margin-top: -5px; color: #93c5fd; font-style: italic; }
+
+/* --- HEADER BUTTON (Telegram) --- */
+.telegram-btn-header { 
+    background-color: #0088cc; 
+    color: white; 
+    text-decoration: none; 
+    padding: 8px 16px; 
+    border-radius: 20px; 
+    font-weight: 600; 
+    font-size: 0.9rem; 
+    transition: background 0.2s; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+}
+.telegram-btn-header:hover { background-color: #00a2f3; }
+
+/* --- SEARCH CONTROLS --- */
+.controls { 
+    background: white; 
+    padding: 20px; 
+    margin: 30px auto; 
+    max-width: 800px; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+    display: flex; 
+    gap: 10px; 
+    justify-content: center; 
+}
+
+select, button { 
+    padding: 12px 20px; 
+    font-size: 1rem; 
+    border-radius: 8px; 
+    border: 1px solid #e2e8f0; 
+}
+
+/* Primary Button (Find Papers) */
+button { 
+    background-color: #2563eb; 
+    color: white; 
+    border: none; 
+    cursor: pointer; 
+    font-weight: bold; 
+    transition: background 0.2s; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px;
+}
+button:hover { background-color: #1d4ed8; }
+
+/* --- RESULTS AREA --- */
+#results-area { max-width: 800px; margin: 0 auto; padding-bottom: 20px; }
+
+.paper-card { 
+    background: white; 
+    padding: 18px 20px; 
+    margin-bottom: 20px; 
+    border-radius: 12px; 
+    border-left: 6px solid #2563eb; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02); 
+    transition: transform 0.2s, box-shadow 0.2s; 
+}
+.paper-card:hover { 
+    transform: translateY(-3px); 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+}
+
+.paper-title { margin: 0 0 10px 0; font-size: 1.25rem; line-height: 1.4; }
+.paper-title a { text-decoration: none; color: #1e293b; }
+.paper-title a:hover { color: #2563eb; }
+
+/* --- COMPACT ACTION BUTTON (Read Paper) --- */
+.telegram-btn {
+    background-color: #2563eb;
+    color: white;
+    text-decoration: none;
+    padding: 6px 16px;       /* Compact Padding */
+    border-radius: 50px;     /* Pill Shape */
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+    border: 1px solid transparent;
+}
+.telegram-btn:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+}
+
+/* --- PAGINATION --- */
+#pagination-controls {
+    max-width: 800px;
+    margin: 0 auto 50px auto;
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.page-btn {
+    background-color: white;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+.page-btn:hover { background-color: #f1f5f9; }
+.page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+#page-info { font-weight: bold; color: #475569; }
+
+/* --- DEBUG CONSOLE (Hidden) --- */
+#debug-console { 
+    background: #1e293b; 
+    color: #4ade80; 
+    font-family: monospace; 
+    padding: 15px; 
+    margin: 20px auto; 
+    max-width: 800px; 
+    height: 150px; 
+    overflow-y: scroll; 
+    border-radius: 8px; 
+    display: none; 
+}
+
+/* Add a specific hover color for the share icon */
+button[title="Share"]:hover {
+    color: #10b981 !important; /* Medical Green */
+    transform: scale(1.1);
+}
+
+/* Existing hover updates (optional refinement) */
+button[title="Copy Citation"]:hover {
+    color: #3b82f6 !important; /* Blue */
+}
+
+/* The Container for Tags and Buttons */
+.card-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Ensures buttons and tags align vertically */
+    margin-bottom: 8px;  /* This controls the gap ABOVE the title */
+}
+
+/* The Title Itself */
+.paper-title {
+    margin-top: 0 !important;    /* Force top margin to zero */
+    margin-bottom: 12px;         /* Space below title (before journal name) */
+    font-size: 1.25rem;
+    line-height: 1.3;            /* Tighter line height prevents white space */
+}
+
+/* The Action Buttons Container */
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* <--- This adds 20px of clean space between each button */
+}
+
+/* Individual Buttons */
+.action-buttons button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1.2rem; /* Slightly larger icon */
+    color: #94a3b8;    /* Softer gray by default */
+    padding: 5px;      /* Adds invisible clickable area around the icon */
+    margin: 0;         /* Reset margins so 'gap' handles the spacing */
+    transition: all 0.2s ease;
+    display: flex;     /* Ensures icons center perfectly */
+}
+
+/* Hover Effects */
+.action-buttons button:hover {
+    color: #2563eb;    /* Turn blue on hover */
+    transform: scale(1.1); /* Slight pop effect */
+}
+
+/* Journal Badge Container */
+.journal-badge {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+}
+
+/*  Free PDF Button (Green Pill) */
+.pdf-btn {
+    background-color: #10b981; /* Success Green */
+    color: white;
+    text-decoration: none;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+.pdf-btn:hover {
+    background-color: #059669;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);
+}
+
+/* Citation Badge */
+.tag-citation {
+    background: #f8fafc;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    padding: 3px 10px;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 0.7rem;
+    margin-left: 5px; /* Space it out from other tags */
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* --- STUDY DNA BAR --- */
+.study-dna-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.dna-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 50px;
+    border: 1px solid; /* Color set inline by JS */
+    background: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* --- AUTHOR LINE STYLES --- */
+.author-row {
+    margin-bottom: 10px;
+    color: #475569;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    line-height: 1.4;
+    gap: 6px; /* <--- THIS FIXES THE SPACING ISSUE PERMANENTLY */
+}
+
+.author-name {
+    font-weight: 700;
+    color: #334155;
+}
+
+.author-inst {
+    color: #64748b;
+    font-weight: 400;
+}
+
+.author-etal {
+    font-style: italic;
+    color: #94a3b8;
+}
+
+.author-icon {
+    color: #94a3b8;
+    font-size: 0.8rem;
+}
+
+/* --- SEARCH HIGHLIGHTING --- */
+mark {
+    background-color: #fef08a; /* Soft Yellow */
+    color: #854d0e;           /* Dark Gold Text */
+    padding: 0 2px;
+    border-radius: 2px;
+    font-weight: 600;
+}
+
+/* --- LEFT TOOL SIDEBAR --- */
+.tool-sidebar {
+    position: fixed; /* Stays in place when scrolling */
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%); /* Perfectly centers it vertically */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 9999; /* Ensures it sits ON TOP of everything */
+}
+
+.tool-btn {
+    width: 45px;
+    height: 45px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Stronger shadow */
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid #e2e8f0;
+}
+
+.tool-btn:hover {
+    background: #2563eb;
+    color: white;
+    transform: scale(1.1);
+}
+
+.tool-btn.active {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Hide on small screens so it doesn't block text */
+@media (max-width: 1200px) {
+    .tool-sidebar { display: none; }
+}
+
+
+/* --- SCROLLABLE ABSTRACT --- */
+.paper-abstract {
+    background: #fafafa;
+    padding: 15px;
+    border-radius: 6px;
+    color: #444;
+    border-left: 4px solid #cbd5e1;
+    
+    /* The Magic Part: */
+    max-height: 150px;   /* Set a fixed height */
+    overflow-y: auto;    /* Add scrollbar if text is longer */
+    transition: max-height 0.3s ease; /* Smooth expansion */
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Custom Scrollbar styling for a cleaner look */
+.paper-abstract::-webkit-scrollbar {
+    width: 6px;
+}
+.paper-abstract::-webkit-scrollbar-track {
+    background: #f1f5f9; 
+}
+.paper-abstract::-webkit-scrollbar-thumb {
+    background: #cbd5e1; 
+    border-radius: 3px;
+}
+.paper-abstract::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8; 
+}
+
+/* Class for the "Expand All" button to toggle */
+.paper-abstract.expanded {
+    max-height: 1000px; /* Enough to show full text */
+}
+
+/* --- MINI DASHBOARD BUTTONS --- */
+.icon-btn {
+    background: white;
+    border: 1px solid #cbd5e1;
+    color: #64748b;
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 1.1rem;
+}
+
+.icon-btn:hover {
+    background: #f1f5f9;
+    color: #2563eb;
+    border-color: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Active state for the dashboard buttons */
+.active-chart-btn {
+    background-color: #eff6ff; /* Light Blue */
+    color: #2563eb;            /* Dark Blue Text */
+    border-color: #2563eb;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
